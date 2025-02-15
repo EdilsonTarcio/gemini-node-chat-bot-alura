@@ -1,5 +1,5 @@
 import { GoogleGenerativeAI, FunctionDeclarationSchemaType } from "@google/generative-ai";
-const genAI = new GoogleGenerativeAI(API); //"GEMINI_API_KEY"
+const genAI = new GoogleGenerativeAI("GEMINI_API_KEY"); //"GEMINI_API_KEY"
 
 let funcoes = {
   //Function Calling
@@ -32,7 +32,7 @@ const tools = {
 }
 
 const model = genAI.getGenerativeModel(
-{ model: "gemini-1.5-flash", tools},
+{ model: "gemini-1.0-pro", tools},
 { apiVersion: "v1beta"});
 
 let chat;

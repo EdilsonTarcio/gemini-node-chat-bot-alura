@@ -1,8 +1,17 @@
 import { chat, funcoes } from './inicializaChat.js';
+import { incorporarDocumentos, incorporarPergunta, leArquivos } from './embedding.js';
 
+const arquivos = await leArquivos([
+  "Pacotes_Argentina.txt", "Pacotes_EUA.txt", "Politicas.txt"
+]);
+
+const documentos = await incorporarDocumentos(arquivos);
+  
 export async function executaChat(mensagem) {
   console.log("Tamanho do histórico: " + (await chat.getHistory()).length);
-  const result = await chat.sendMessage(mensagem);
+  let doc = await incorporarPergunta(mensagem, documentos);
+  let pronpt = mensagem + " talvez esse trecho te ajude a formular a resposta " + doc.text
+  const result = await chat.sendMessage(pronpt);
   const response = await result.response;
   
   const content = response.candidates[0].content;
